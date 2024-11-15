@@ -1,0 +1,365 @@
+(function ($, root, undefined) {
+	$(function () {
+		'use strict';
+		$(document).ready(function()
+		{
+
+
+			//   Scroll to Links  #
+			$(document).on('click.smoothscroll', 'a.scrollerTo[href^="#"], .res-nav li a[href^="#"], .res-nav-topheader li a[href^="#"], .subnavonepagerScrollerto a[href^="#"], #burger-menu-nav a[href^="#"]', function(e) {
+				e.preventDefault();
+				var target = this.hash,
+					$target = $(target);
+				if($target.length){
+					if(target == '#page') {
+						setTimeout(function() {
+							$('#res-nav-clone').fadeOut(150);
+						}, 600); // delay ausblenden fixedNav wenn onTop geklickt
+					}
+					$('html, body').stop().animate({
+						'scrollTop': $target.offset().top - 85
+					}, 1500, 'easeInOutExpo', function() {
+						// window.location.hash = target;
+						history.pushState(null, null, target);
+					});
+				}
+			});
+
+			// AOS Animations + Reload on Resize
+			const res_aos_url = $('body').attr('data-aosjs');
+			if (res_aos_url) {
+				jQuery.ajax({
+					url: res_aos_url,
+					dataType: "script",
+					success: function() {
+						new AOS.init
+						({
+							// Global settings
+							disable: false, // accepts following values: 'phone', 'tablet', 'mobile', boolean, expression or function
+							startEvent: 'DOMContentLoaded', // name of the event dispatched on the document, that AOS should initialize on
+							initClassName: 'aos-init', // class applied after initialization
+							animatedClassName: 'aos-animate', // class applied on animation
+							useClassNames: false, // if true, will add content of `data-aos` as classes on scroll
+
+							// Settings that can be overriden on per-element basis, by `data-aos-*` attributes:
+							offset: 50, // offset (in px) from the original trigger point
+							delay: 0, // values from 0 to 3000, with step 50ms
+							duration: (window.innerWidth > 490 ? 1000 : 150), // wenn der Browser breiter als 490px ist, dann wird 1200ms gesetzt. Andernfalls 150
+							// duration: 1000, // values from 0 to 3000, with step 50ms default 2400
+							easing: 'ease-out', // default easing for AOS animations
+							once: false, // whether animation should happen only once - while scrolling down
+							mirror: false, // whether elements should animate out while scrolling past them
+							anchorPlacement: 'top-bottom', // defines which position of the element regarding to window should trigger the animation
+						});
+
+						// Re-Bind AOS Events Referesh bei Responsive Resize
+						let refresh_aos_timeout;
+						window.addEventListener('resize', function()  {
+							clearTimeout(refresh_aos_timeout);
+							refresh_aos_timeout = setTimeout(function() {
+								AOS.refresh()
+							}, 1000);
+						});
+						// OnClick Elemente refresh AOS wegen neuer Seitenhoehe
+						$('body').on('click', '.res-collapse-button, .res-filter-item, .tabsNav .nav-link', function() {
+							clearTimeout(refresh_aos_timeout);
+							refresh_aos_timeout = setTimeout(function() {
+								AOS.refresh()
+							}, 1000);
+						});
+
+					}
+				});
+			}
+
+			// Fade Out Pages
+			var durationPagefader = 60
+			$(document).on('click', '' +
+				'.res-nav nav li:not(.nopagefade) a:not(.nopagefade),' +
+				'.res-nav-topheader li:not(.nopagefade) a:not(.nopagefade) a:not(.remove_from_cart_button),' +
+				'.res-navtab li:not(.nopagefade) a:not(.nopagefade),' +
+				'.side-bar a:not(.nopagefade),' +
+				'.overlayer-burgermenu li:not(.nopagefade) a:not(.nopagefade)'
+				, function(e) {
+				e.preventDefault()
+
+				let fade = false;
+				let href = $(this).attr('href')
+
+				// Dropdown-Toggles oder leerer #: nichts tun
+				if(href === '#' || $(this).hasClass('dropdown-toggle')) {
+					return;
+				}
+
+				// Link mit #
+				if(href.indexOf("#") !== -1) {
+
+					let currentUrl = location.protocol+'//'+
+						location.host+
+						location.pathname+
+						(location.search?location.search:"")
+
+					// Check if link is absolute and on same website
+					if(href.includes(window.location.hostname) && !href.includes(currentUrl)) {
+						fade = true;
+					} else { // Link points to same page
+						// console.log('Link points to same page')
+
+						href = href.replace(currentUrl, '');
+						let anchor = $(href);
+
+						// Scroll-Effect, bc this case is not included in the one above
+						if(anchor.length){
+							if(href == '#page') {
+								setTimeout(function() {
+									$('#res-nav-clone').fadeOut(150);
+								}, 600); // delay ausblenden fixedNav wenn onTop geklickt
+							}
+							$('html, body').stop().animate({
+								'scrollTop': anchor.offset().top - 85
+							}, 1500, 'easeInOutExpo');
+						}
+
+					}
+				} else { // Links ohne #
+					// don't fade email and phone
+					if(href.indexOf("mailto") === 0 || href.indexOf("tel") === 0) {
+						window.location = href;
+						fade = false
+					} else {
+						fade = true;
+					}
+				}
+
+				// Fade
+				if(fade) {
+					$('#page, #footer-fade, .side-bar').fadeOut(durationPagefader, function() {
+						window.location = href;
+					});
+				}
+			});
+
+
+			// Modalbox  -  lade Inhalt dynamisch in via  site_url
+			var res_modal_site_url = $('body').attr('data-siteurl');
+			$("a.load-content").click(function() {
+				var post_id = $(this).attr("data-id");
+				var reference = ('.singlepageBox');
+				var target = "#" + $(this).attr("data-target");
+				var loadUrl = site_url+"/?p=" + post_id;
+				$(target + " .modal-body").load(loadUrl + " " + reference, function() {
+					$(target).modal('show');
+				});
+				return false;
+			});
+
+			/* init Jarallax */
+			jarallax(document.querySelectorAll('.jarallax'));
+
+			jarallax(document.querySelectorAll('.jarallax-keep-img'), {
+				keepImg: true,
+			});
+
+			$('.jarallax').jarallax({
+				speed: 0.6
+			});
+			
+			
+			//   Mobile Bootstrap 4.5 Burger X Transform
+			$('.navbar-toggler').on('click', function () {
+				$('.mobile-x-close').toggleClass('open');
+			});
+			
+			// Burger Nav schliessen nach Klick bei Onepager
+//				$('#burger-menu-nav ul:not(.dropdown) li a').on('click', function(){
+//				$(".closebutton").click();
+//			}); 
+
+
+			//  Carousel-Slider Starten Bootstrap 4.5
+			$(function() {
+				$('.carousel-inner').each(function() {
+					$(this).find('.carousel-item').first().addClass("active");
+				});
+			});
+
+			//  Tabs active 
+			$(function() {
+				$('.tabsNav.tab-ajax').each(function() {
+					$(this).find('.nav-link').first().addClass("active");
+					$(this).find('.tab-pane').first().addClass("active");
+				});
+			});
+	
+
+			/** Check current URL-name, setzte active klasse bei gleichem namen  */
+//			var path = window.location.href; // because the 'href' property of the DOM element is the absolute path
+//			$('.res-custom-nav a').each(function () {
+//				if (this.href === path) {
+//					$(this).addClass('active');
+//				}
+//			});
+
+
+
+			// init Masonry
+//			var $grid = $('.grid').masonry({
+//				itemSelector: '.grid-item',
+//				percentPosition: true,
+//				columnWidth: '.grid-sizer'
+//			});
+//			$grid.imagesLoaded().progress( function() {
+//				$grid.masonry();
+//			});
+
+
+			// Modalbox Video Stop by Close
+//			$('.res-video-modalBox').on('hidden.bs.modal', function (e) {
+//				var $iframes = $(e.target).find('iframe');
+//				$iframes.each(function(index, iframe){
+//					$(iframe).attr("src", $(iframe).attr('src'));
+//				});
+//			});
+
+			// ------- Filter
+			var filter = $('.res-woo-product-boxes-filter');
+			var itemContainer = $('.res-woo-product-boxframe');
+			var items = $('.box-item');
+
+			// Click-Event
+			$(filter).find('li.res-filter-item').on('click', function() {
+
+				// Aktuell geklickter Filter
+				var currentFilter = $(this).attr('data-filter');
+
+				// Andere active-Klassen entfernen
+				filter.find('li.res-filter-item').removeClass('active');
+
+				// Active-Klasse setzen
+				$(this).addClass('active');
+
+				// Alle Posts einblenden
+				if(currentFilter === 'all') {
+					$(itemContainer).find(items).fadeIn('fast');
+				} else {
+					// Andere Kategorien ausblenden
+					$(itemContainer).find(items).not('.' + currentFilter).hide();
+
+					// Aktuelle Kategorie einblenden
+					$(itemContainer).find('.' + currentFilter).fadeIn('fast');
+				}
+
+				// Trigger AOS-Animation, weil Elemente sonst fehlen, wenn sich die Höhe des Dokuments wegen der Filter ändert
+				setTimeout(function() {
+					AOS.init();
+				}, 100);
+			});
+
+
+			// 3rd-Level-Menu
+			$(document).on('click', 'li:not(.megamenu) .dropdown-menu .dropdown-submenu > a', function(e) {
+			// $(document).on('click', 'li:not(.megamenu) .dropdown-menu a.dropdown-item', function(e) {
+			// $('.dropdown-menu a.dropdown-item').on('click', function(e) {
+				e.preventDefault();
+
+				if (!$(this).next().hasClass('show')) {
+					$(this).parents('.dropdown-menu').first().find('.show').removeClass('show');
+				}
+				var $subMenu = $(this).next('.dropdown-menu');
+				$subMenu.toggleClass('show');
+
+
+				$(this).parents('li.nav-item.dropdown.show').on('hidden.bs.dropdown', function(e) {
+					$('.dropdown-submenu .show').removeClass('show');
+				});
+
+				return false;
+			});
+
+			// Prevent Default
+			$('.preventDefault').on('click', function(e) {
+				e.preventDefault();
+			});
+			
+			var isMapsBlocked = $("div[id^='googleMapsBox']").children().length === 0;
+			if (true === isMapsBlocked && $("div[id^='googleMapsBox']")) {
+				var googleMapsContentBlockerTitel 	= google_maps_content_blocker_text.gmcb_titel;
+				var googleMapsContentBlockerText 	= google_maps_content_blocker_text.gmcb_text;
+				var googleMapsContentBlockerButton 	= google_maps_content_blocker_text.gmcb_button;
+				$("div[id^='googleMapsBox']")
+					.prepend('<div class="res-google-maps-content-blocker"><h3>' + googleMapsContentBlockerTitel + '</h3><p>' + googleMapsContentBlockerText + '</p><button href="#consent-change" id="rcb-sc-link-change" data-success-message="" class="rcb-sc-link rcb-sc-link-change ">' + googleMapsContentBlockerButton + '</button></div>')
+			}
+
+
+
+		});
+	});
+})(jQuery, this);
+
+
+
+	// page-on-top scroll remove   === 0  or  <= 20
+	scrollTopClassAdder = (e) => {
+		const scrollTopClass = "page-on-top";
+		const lastKnownScrollPosition = window.scrollY;
+		window.requestAnimationFrame(function() {
+			if (lastKnownScrollPosition <= 400) {
+				document.body.classList.add(scrollTopClass);
+			}
+			else {
+				document.body.classList.remove(scrollTopClass);
+			}
+		});
+	}
+	document.addEventListener('scroll', scrollTopClassAdder)
+	//Einmalig ausführen
+	scrollTopClassAdder()
+
+
+
+	// Body-Klasse hinzufügen, wenn der Footer und kein Header sichtbar ist
+	var headerNode = document.querySelectorAll("header.res-header");
+	var footerNodes = document.querySelectorAll("footer");
+	var footerNodeObserver = new IntersectionObserver (function (entries, observer) {
+
+		if (entries.length === 1) {
+			entries.forEach(function(entry) {
+				const classname = "footer-in-viewport";
+				if (entry.target.tagName === "FOOTER")
+					document.body.classList.add(classname);
+				else {
+					document.body.classList.remove(classname);
+				}
+			},{});
+		}
+
+	}, {
+		threshold: 0 // 0: sofort; 0.5: ab 50% sichtbar, etc.
+	});
+	footerNodes.forEach((el) => {
+		footerNodeObserver.observe(el);
+	})
+	headerNode.forEach((el) => {
+		footerNodeObserver.observe(el);
+	})
+
+
+
+	// alignfull css wenn mac scrollbar ausgeblendet, remove die -9px
+
+	var scrollbarWidth = 0
+
+	window.onresize = () => {
+		document.body.style.setProperty("--scrollbarWidth", `${scrollbarWidth}px`)
+	}
+
+	document.addEventListener("DOMContentLoaded", function(event) {
+		scrollbarWidth = window.innerWidth - document.body.clientWidth
+		if (scrollbarWidth <= 2) {
+			scrollbarWidth = 0
+		}
+		else {
+			scrollbarWidth = 9
+		}
+		document.body.style.setProperty("--scrollbarWidth", `${scrollbarWidth}px`)
+	});

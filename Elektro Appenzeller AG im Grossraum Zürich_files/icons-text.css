@@ -1,0 +1,66 @@
+
+
+/* BLOCKS CSS  */
+
+/*************************************************************************/
+/* Icons-Text  */
+
+.res-icons-text .icons-txt-content{
+	font-size: 85%;
+}
+
+
+
+
+/* ------------  CMS Backend Preview ---------------- */
+
+.acf-block-preview .res-icons-text {
+	position: relative;
+	padding: 10px 30px;
+	border-left: 1px solid #f4f4f4;
+}
+.acf-block-preview .res-icons-text .icons-text-layout.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+.acf-block-preview .res-icons-text .iconbox-bottom {
+    max-height: 150px;
+    overflow: hidden;
+}
+.acf-block-preview .res-icons-text .row-cols-md-2 .iconbox-bottom {
+    width: 49%;
+}
+.acf-block-preview .res-icons-text .row-cols-md-3 .iconbox-bottom {
+    width: 33%;
+}
+.acf-block-preview .res-icons-text .row-cols-md-4 .iconbox-bottom {
+    width: 24%;
+}
+
+.acf-block-preview .res-icons-text h1,
+.acf-block-preview .res-icons-text h2,
+.acf-block-preview .res-icons-text h3 {
+	font-size: 16px;
+	padding: 0;
+	margin: 10px 0;
+}
+.acf-block-preview .res-icons-text p {
+	font-size: 14px !important;
+	padding: 0 10px 0 0;
+	margin: 10px 0;
+}
+.acf-block-preview .res-icons-text a {
+	color: #000;
+	text-decoration: none;
+}
+.acf-block-preview .res-icons-text ul,
+.acf-block-preview .res-icons-text li{
+	font-size: 16px !important;
+	line-height: 20px;
+	padding: 4px 0;
+	margin: 0 0 0 15px;
+}
+
+.acf-block-preview .res-icons-text .icons-txt-img img {
+	max-width: 35px;
+}

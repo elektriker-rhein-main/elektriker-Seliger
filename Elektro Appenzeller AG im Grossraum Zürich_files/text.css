@@ -1,0 +1,189 @@
+
+
+/* BLOCKS CSS  */
+
+/*************************************************************************/
+/* Text Txt  */
+
+
+
+.res-txt .txt-section {
+}
+
+.res-txt .txt-title-field h1 {
+}
+.res-txt .txt-title-field h2 {
+}
+.res-txt .txt-title-field h3 {
+}
+.res-txt .txt-text-field {
+}
+
+.res-txt .layout-1-spalte1 {
+}
+.res-txt .layout-1-spalte2 {
+}
+
+.res-txt .layout-3 .btn-float-right .title-only-btns {
+	font-size: 85%;
+	padding-right: 20px;
+}
+ 
+/* Custom Title Class */
+.res-txt .custom-title {
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	padding: 10px 0;
+
+}
+
+.res-txt .res-txt-arrow{
+	transition: all 0.5s ease-in-out;
+}
+.res-txt .res-txt-arrow a{
+	color: #222;
+}
+.res-txt .res-txt-arrow:hover{
+	transform: translateY(5px);
+}
+
+
+.res-text-bild .txt-text ul {
+	list-style: none;
+	font-size: 90%;
+	padding: 10px 0 10px 0;
+}
+.res-text-bild .text li {
+    padding-bottom: 10px;
+    margin-left: 33px;
+}
+.res-text-bild .text li:before {
+	content: "\f111";
+    font-family: "Font Awesome 5 Pro";
+    position: absolute;
+    margin-left: -30px;
+	margin-top: 2px;
+    text-decoration: inherit;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 11px;
+    opacity: 0.7;
+}
+
+
+
+
+/* ------------  Container handle Desktop ---------------- */
+
+@media only screen and (min-width: 1280px) {
+
+	/*  Align WIDE  */
+	.res-txt.alignwide .inner-container.container-wide,
+	.res-txt.alignwide .inner-container.container-off {
+			max-width: 100%;
+			margin: 0 auto;
+			width: 100%;
+			padding: 0 15px;
+	}	
+	/*  Align FULL  */
+	.res-txt.alignfull .inner-container.container-off,
+	.res-txt.alignfull .inner-container.container-wide {
+			max-width: 80%;
+			margin: 0 auto;
+			width: 100%;
+			padding: 0 15px;
+	}
+	
+}
+
+@media only screen and (max-width: 970px) {
+	.res-txt.alignfull .inner-container.container-off { max-width: 80%; margin: 0 auto;}
+	.res-txt.alignfull.layout03 .inner-container{max-width: unset;margin: unset;	width: unset;padding: unset;}	
+}
+
+
+/* ------------  CMS Backend Preview ---------------- */
+
+.acf-block-preview .res-txt {
+	position: relative;
+	padding: 10px 30px;
+	border-left: 1px solid #f4f4f4;
+}
+
+.acf-block-preview .res-txt h1,
+.acf-block-preview .res-txt h2,
+.acf-block-preview .res-txt h3 {
+	font-size: 22px;
+	line-height: 120% !important;
+	padding: 0;
+	margin: 10px 0;
+}
+.acf-block-preview .res-txt .txt-section p {
+	font-size: 16px !important;
+	padding: 0;
+	margin: 10px 0;
+}
+.acf-block-preview .res-txt .txt-section a {
+	color: #000;
+	text-decoration: none;
+}
+.acf-block-preview .res-txt .title-only-btns a {
+	color: #000;
+	text-decoration: none;
+	font-size: 14px;
+	padding: 8px;
+	margin: 0 8px;
+}
+
+
+.acf-block-preview .res-txt .txt-section ul,
+.acf-block-preview .res-txt .txt-section li{
+	font-size: 16px !important;
+	line-height: 20px;
+	padding: 4px 0;
+	margin: 0 0 0 15px;
+}
+.acf-block-preview .res-txt .txt-section .btn {
+	font-size: 14px !important;
+	padding: 8px 16px;
+	margin: 8px 0;
+	border: 0;
+	background-color: #eee;
+}
+
+.acf-block-preview .res-txt .layout-1.txt-section .row,
+.acf-block-preview .res-txt .layout-2.txt-editor-spalten .row {
+	display: flex;
+	flex-wrap: wrap;
+}
+.acf-block-preview .res-txt .var-2spalten {
+        padding: 15px;
+}
+.acf-block-preview .res-txt .col-md-4.var-2spalten,
+.acf-block-preview .res-txt .txt-editor-spalten .col-md-4 {
+    flex: 0 0 30%;
+}
+.acf-block-preview .res-txt .col-md-5.var-2spalten,
+.acf-block-preview .res-txt .txt-editor-spalten .col-md-5 {
+    flex: 0 0 40%;
+}
+.acf-block-preview .res-txt .col-md-6.var-2spalten,
+.acf-block-preview .res-txt .txt-editor-spalten .col-md-6 {
+    flex: 0 0 48%;
+}
+.acf-block-preview .res-txt .col-md-7.var-2spalten,
+.acf-block-preview .res-txt .txt-editor-spalten .col-md-7 {
+    flex: 0 0 60%;
+}
+.acf-block-preview .res-txt .col-md-12.var-2spalten,
+.acf-block-preview .res-txt .txt-editor-spalten .col-md-12 {
+    flex: 0 0 100%;
+}
+
+.acf-block-preview .res-txt .var-2spalten.postContent,
+.acf-block-preview .res-txt .txt-editor-spalten .text-spalten-spalte02 {
+    flex-basis: 0;
+    flex-grow: 1;
+}
+
+

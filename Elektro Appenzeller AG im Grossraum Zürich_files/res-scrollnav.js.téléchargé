@@ -1,0 +1,373 @@
+// scrollnav 9-2022 fixenav delay
+(function ($, root, undefined) {
+    $(function () {
+        'use strict';
+        $(document).ready(function()
+        {
+
+            if (!window.scrollnavInitialized) {
+                window.scrollnavInitialized = true;
+                let navigationSettings = $('#navigation-settings');
+
+                if(navigationSettings.length > 0) {
+                    handleNavigation(navigationSettings);
+                } else {
+                    logToConsole('no nav settings div found!');
+                }
+            }
+
+        });
+
+        const showConsoleLog = false;
+
+        function logToConsole(message) {
+            if (showConsoleLog) {
+                console.log("res-scrollnav: " + message);
+            }
+        }
+
+        function handleNavigation(navigationSettings) {
+
+
+            // Navigation-Settings
+            let fixednav = navigationSettings.attr('data-fixednav');
+            let fixednavmobile = navigationSettings.attr('data-fixednavmobile');
+            let fixednav_offset = navigationSettings.attr('data-fixednav-offset');
+            let anchor = navigationSettings.attr('data-anchor');
+            let notfixedonscrollup = navigationSettings.attr('data-notfixedonscrollup');
+            let min_scroll_desktop=navigationSettings.attr('data-min_scroll_desktop');
+            let min_scroll_mobile=navigationSettings.attr('data-min_scroll_mobile');
+
+            $('header.res-header').addClass('res-fixnav');
+            $('header.res-header').addClass('oversize-header');
+
+            var header = $('header.res-fixnav').not('#res-nav-clone');
+            var body = $('body');
+            // var burgerButton = $('#burgermenuX-btn');
+            var burgerButton = $('.burger-lines-button');
+            var burgerButtonTop = burgerButton.length ? burgerButton.position().top : 0;
+            var lastScrolledFromTop = 0;
+            // var delta = 250;
+            var footer = $('.res-footer');
+            var navbarHeight = header.outerHeight();
+            var clonedNavbarHeight = navbarHeight;
+            var additionalDistance = 100;
+            var animationDelay = 0;
+            var mobileBreakPoint = 950;
+            var windowWidth = $(window).width();
+            var hasClone = !! document.querySelector('#res-nav-clone');
+
+            if (isDesktop()) {
+                createNavClone();
+                hasClone = true;
+            }
+            handleScrollAndResize(false);
+            if (!isDesktop()) {
+
+                if (burgerButton.length) burgerButton.addClass('burger-mobile-fixnav').css({'top': burgerButtonTop, 'position': 'fixed'});
+
+
+                header.addClass('transition-top').css({'top': 0, 'position': 'fixed'});
+            }
+            $(window).on('resize scroll', function(event) {
+                if (event.type == "resize") {
+                    windowWidth = $(window).width();
+                    navbarHeight = header.outerHeight();
+                    if (isDesktop() && !hasClone) {
+                            createNavClone();
+                            hasClone = true
+                    }
+                    if (isDesktop()) {
+                        // "header-option-absolute"
+                        if (header.hasClass("header-option-absolute")) {
+                            header.css({'top': 'unset', 'position': 'absolute'});
+                        } else {
+                            header.css({'top': 'unset', 'position': 'relative'});
+                        }
+
+                        // header.css({'top': 'unset'});
+                    }
+                    logToConsole("resize");
+                    handleScrollAndResize(true);
+                } else {
+                    handleScrollAndResize(false);
+                }
+
+            });
+            // evtl .resize();
+
+
+            function fixednavCloneExists() {
+                return $('#res-nav-clone').length > 0
+            }
+
+            function createNavClone() {
+                header.clone().prependTo('#page').attr('id', 'res-nav-clone').addClass('show').addClass('transition').css({'top': -navbarHeight});
+                $('#res-nav-clone').find('#res-menu').attr("id","res-menu-cloned");
+                clonedNavbarHeight = $('#res-nav-clone').find('.container-fluid').outerHeight(); // nicht die Höhe des Clones, da eventuelle Subnav mit einfliesst. Diese soll sichtbar bleiben
+
+                // Logo ändern: von normal auf fixed-logo
+                $('#res-nav-clone .brand-logo').attr('src', header.find('.brand-logo').attr('data-fixlogo'));
+
+                let resizeObserver = new ResizeObserver(() => {
+                    clonedNavbarHeight = $('#res-nav-clone').find('.container-fluid').outerHeight();
+                    if (parseInt($('#res-nav-clone').css('top'),10) < 0) {
+                        $('#res-nav-clone').show().css({'top': -clonedNavbarHeight});
+                    }
+                });
+                resizeObserver.observe($("#res-nav-clone")[0]);
+
+            }
+
+            function is_in_viewport(element){
+                var elementTop = element.offset().top;
+                var elementBottom = elementTop + element.outerHeight();
+                var viewportTop = $(window).scrollTop();
+                var viewportBottom = viewportTop + $(window).height();
+                return elementBottom > viewportTop && elementTop < viewportBottom;
+            }
+
+            function scrolledDown(scrolledFromTop) {
+                if (scrolledFromTop > lastScrolledFromTop) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            function scrolledEnough(scrolledFromTop) {
+                let delta = min_scroll_desktop;
+                if (!isDesktop()) {
+                    delta = min_scroll_mobile;
+                }
+                if (Math.abs(lastScrolledFromTop - scrolledFromTop) <= delta) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+
+            function hideNavDistanceReached(scrolledFromTop) {
+                return (scrolledFromTop > (navbarHeight + additionalDistance));
+            }
+
+            function hideNavDistanceOnScrollUpReached(scrolledFromTop) {
+                return (scrolledFromTop < 2.2 * (navbarHeight + additionalDistance));
+            }
+
+            function showStickyNavDistanceReached(scrolledFromTop) {
+                return (scrolledFromTop > ($(window).height() /100 * fixednav_offset));
+            }
+
+            function isAtTop(scrolledFromTop, distance) {
+                if (scrolledFromTop <= distance) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            function isDesktop() {
+                if (windowWidth > mobileBreakPoint) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            function isFixedNav() {
+                if (fixednav == 'false') {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+
+            function isNotFixedOnScrollUp() {
+                if (notfixedonscrollup == 'false') {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+
+            function isFixedMobileNav() {
+                if (fixednavmobile == 'false') {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+
+            function showStickyNav(showBurger) {
+                setTimeout(function() {
+                    $('#res-nav-clone').show().css({'top': 0, 'position': 'fixed'});
+                    body.addClass('res-fix-nas-in-viewport');
+                    if (showBurger) {
+                        if (burgerButton.length) burgerButton.css({'top': burgerButtonTop, 'position': 'fixed'});
+                    }
+                }, animationDelay);
+            }
+
+            function hideStickyNav(hideBurger) {
+                setTimeout(function() {
+                    $('#res-nav-clone').show().css({'top': -clonedNavbarHeight, 'position': 'fixed'});
+                    body.removeClass('res-fix-nas-in-viewport');
+                    if (hideBurger) {
+                        if (burgerButton.length) burgerButton.css({'top': -100});
+                    }
+                }, animationDelay);
+            }
+
+            function showBurgerMenu() {
+                setTimeout(function() {
+                    if (burgerButton.length) burgerButton.css({'top': burgerButtonTop, 'position': 'fixed'});
+                }, animationDelay);
+            }
+
+            function hideBurgerMenu() {
+                setTimeout(function() {
+                    if (burgerButton.length) burgerButton.css({'top': -100});
+                }, animationDelay);
+            }
+
+            function showMobileStickyNav() {
+                setTimeout(function() {
+                    if (burgerButton.length) {
+                        burgerButton.css({'top': burgerButtonTop, 'position': 'fixed'});
+                    }
+                    body.addClass('res-fix-nas-in-viewport');
+                    header.addClass('transition-top').css({'top': 0, 'position': 'fixed'});
+                    if (burgerButton.length) {
+                        burgerButton.addClass('burger-mobile-fixnav');
+                    }
+                }, animationDelay);
+            }
+
+            function hideMobileStickyNav() {
+                setTimeout(function() {
+                    body.removeClass('res-fix-nas-in-viewport');
+                    header.show().css({'top': -navbarHeight - 25, 'position': 'fixed'}); // -25px wegen Boxshadow
+                    if (burgerButton.length) {
+                       burgerButton.addClass('notransition').css({
+                            'top': -100,
+                            'position': 'fixed'
+                        });
+                        burgerButton[0].offsetHeight; // Force layout reflow bevor notransition Klasse entfernt wird, ansonsten wird top dennoch animiert
+                        burgerButton.removeClass('notransition');
+                    }
+                }, animationDelay);
+            }
+
+            function handleScrollAndResize(resized) {
+                const scrolledFromTop = $(window).scrollTop();
+                if (resized) {
+                    lastScrolledFromTop = 0;
+                }
+                // if (!scrolledEnough(scrolledFromTop)) {
+                //     logToConsole("NO SCROLL");
+                //     return;
+                // }
+                // Scrolled Down
+                if (scrolledDown(scrolledFromTop)) {
+                    // Desktop
+                    if (isDesktop()) {
+                        if(is_in_viewport(footer) && !is_in_viewport(header)) {
+                            // show nav
+                            showStickyNav(true);
+                            document.dispatchEvent(new Event('showSearchRowOnFixedNav'))
+                            logToConsole("show nav -> FOOTER");
+                        } else {
+                            if (isFixedNav()) {
+                                if (showStickyNavDistanceReached(scrolledFromTop)) {
+                                    // show nav
+                                    showStickyNav(true);
+                                    document.dispatchEvent(new Event('showSearchRowOnFixedNav'))
+                                    logToConsole("show nav -> STICKY & DISTANCE");
+                                } else {
+                                    hideBurgerMenu();
+                                    logToConsole("hide burger");
+                                }
+                            } else {
+                                if (hideNavDistanceReached(scrolledFromTop)) {
+                                    // hide nav
+                                    hideStickyNav(true);
+                                    document.dispatchEvent(new Event('hideSearchRow'))
+                                    logToConsole("hide nav (animated) -> DISTANCE");
+                                } else {
+                                    hideBurgerMenu();
+                                    logToConsole("hide burger");
+                                }
+                            }
+                        }
+                    // Mobile
+                    } else {
+                        // Keine Änderung der fixed nav, wenn sie immer angezeigt werden soll
+                        if (isFixedMobileNav()) {
+                            return
+                        }
+
+                        // Anzeigen, wenn Footer sichtbar ist
+                        if( is_in_viewport(footer) ) {
+                            showMobileStickyNav()
+                        }
+
+                        // Verstecken, wenn der Footer noch nicht sichtbar ist und weit genug gescrollt wurde
+                        else if (! is_in_viewport(footer) && hideNavDistanceReached(scrolledFromTop) ){
+                            hideMobileStickyNav()
+                        }
+                    }
+                // Scrolled Up
+                } else {
+                    if (!scrolledEnough(scrolledFromTop) && !isAtTop(scrolledFromTop, 10)) {
+                        logToConsole("NO SCROLL");
+                        return;
+                    }
+                    // Desktop
+                    if (isDesktop()) {
+                        if (isNotFixedOnScrollUp()) {
+                            hideStickyNav(true);
+                            logToConsole("hide nav (clone) -> NOT FIX ON SCROLL UP");
+                            if (isAtTop(scrolledFromTop, 10)) {
+                                showBurgerMenu();
+                                logToConsole("show burger menu -> TOP");
+                            }
+                        } else {
+                            if (isAtTop(scrolledFromTop, 10)) {
+                                hideStickyNav(false);
+                                document.dispatchEvent(new Event('hideSearchRow'))
+                                showBurgerMenu();
+                                logToConsole("hide nav (clone) -> TOP");
+                            } else if (hideNavDistanceOnScrollUpReached(scrolledFromTop)) {
+                                hideStickyNav(true);
+                                document.dispatchEvent(new Event('hideSearchRow'))
+                                logToConsole("hide nav (clone) -> FIXED but CLOSE TO TOP");
+                            } else {
+                                showStickyNav(true);
+                                document.dispatchEvent(new Event('showSearchRowOnFixedNav'))
+                                logToConsole("show nav (clone -> SCROLL UP");
+                            }
+                        }
+                    }
+                    // Mobile
+                    else {
+                        if (isNotFixedOnScrollUp()) {
+                            if (isAtTop(scrolledFromTop, 10)) {
+                                showMobileStickyNav();
+                                logToConsole("Mobile - show nav -> CLOSE TO TOP");
+                            } else {
+                                hideMobileStickyNav();
+                                logToConsole("Mobile - hide nav -> NOT FIXED ON SCROLL UP");
+                            }
+                        } else {
+                            showMobileStickyNav();
+                            logToConsole("Mobile - show nav -> SCROLL UP");
+                        }
+
+                    }
+                }
+                lastScrolledFromTop = scrolledFromTop;
+            }
+        }
+    });
+})(jQuery, this);

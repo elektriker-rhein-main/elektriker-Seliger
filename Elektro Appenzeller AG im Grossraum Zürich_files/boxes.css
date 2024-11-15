@@ -1,0 +1,472 @@
+
+
+/* BLOCKS CSS  */
+
+/*************************************************************************/
+/* Boxes  */
+
+
+.res-boxes {
+}
+
+/* ------------  Layout 1 ---------------- */
+
+.res-boxes .postBox {
+}
+.res-boxes .postContent {
+	word-break: break-word;
+}
+
+.res-boxes .box-post-category {
+	font-size: 70%;
+	line-height: 160%;
+	padding-bottom: 8px;
+}
+.res-boxes .box-post-category span {
+	padding-right: 10px;
+}
+
+.res-boxes .postContent .btn-sm {
+    font-size: 80%;
+    padding: 10px 16px;
+}
+.res-boxes .postContent .vorschau-text p {
+	margin-bottom: 0;
+}
+.res-boxes .postContent .vorschau-text {
+	line-height: 140%;
+}
+
+
+/* ------------  Layout 2 ---------------- */
+
+.res-boxes .box-overlayer {
+    opacity: 1;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transition: all .4s ease-in-out;
+	background: rgba(0,0,0, .4);
+    color: #fff;
+    height: 100%;
+    width: 100%;
+}
+
+.res-boxes .boxlayout02 .vorschau-text {
+	font-size: 85%;
+	line-height: 160%;
+	margin-bottom: 10px;
+}
+
+
+
+/* ------------  Layout 3  TEAM   ---------------- */
+
+/*Bild Hover Effekt*/
+
+.res-boxes .teamImg.bild-effekt .hover-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+
+.res-boxes .teamImg.bild-effekt  .post-img {opacity: 1;}
+
+.res-boxes .teamBox .teamImg.bild-effekt:hover .hover-img {opacity: 1;}
+
+.res-boxes .teamBox .teamImg.bild-effekt:hover .post-img {opacity: 0;}
+
+/*Bild Hover Effekt Ende*/
+
+.res-boxes .teamContent .vorschau-text {
+	font-size: 90%;
+	line-height: 140%;
+}
+.res-boxes .teamContent .vorschau-text p {
+	margin-bottom: 0;
+	min-height: 40px;
+}
+
+.res-boxes .team-infos {
+	font-size: 85%;
+	line-height: 140%;
+}
+
+
+.res-boxes .teamContent .team-infos .team-contact-icon-link i,
+.res-boxes .teamContent .team-infos .team-social-icon-link i {
+	transition: all .3s ease-in-out;
+	font-size: 130%;
+	margin-bottom: 10px;
+	margin-right: 25px;
+}
+.res-boxes .teamContent .team-infos .team-social-icon-link i {
+	font-size: 150%;
+}
+.res-boxes .teamContent .team-infos .team-contact-icon-link i:hover,
+.res-boxes .teamContent .team-infos .team-social-icon-link i:hover {
+	opacity: 0.8;
+	transform: scale(1.2);
+}
+.res-boxes .teamContent .team-infos .team-contact-icon-link span {
+	display: none;
+}
+
+/* Icon mit oder ohne Text option Desktop */
+@media only screen and (min-width: 970px) {
+	.res-boxes .teamContent .team-infos a.team-contact-icon-link.contact-txt-show  {
+		display: block;
+	}
+	.res-boxes .teamContent .team-infos .team-contact-icon-link.contact-txt-show i {
+		margin-right: 17px;
+	}
+	.res-boxes .teamContent .team-infos .team-contact-icon-link.contact-txt-show span {
+		font-size: 90%;
+		display: inline-block;
+	}
+}
+
+
+.res-boxes .teamContent .team-infos .team-beschreib {
+}
+.res-boxes .teamContent .team-infos .team-kontakt {
+}
+.res-boxes .teamContent .team-infos .team-social {
+}
+
+.res-boxes .teamContent .team-infos li {
+    padding-bottom: 7px;
+    margin-left: 15px;
+}
+.res-boxes .teamContent .team-infos li:before {
+    margin-left: -14px;
+    font-weight: normal;
+    font-size: 8px;
+    opacity: 0.6;
+}
+
+.res-boxes .teamContent .btn-text-link {
+    padding: 10px 0;
+}
+
+
+
+
+
+/* MOBILE Standards smaller */
+@media only screen and (max-width: 970px) {
+	.res-boxes .postContent h2 { font-size: 130%; line-height: 130%; }
+	.res-boxes .postContent h3 { font-size: 115%; line-height: 120%; }
+	.res-boxes .postContent h4 { font-size: 105%; line-height: 120%; }
+	.res-boxes .postContent .vorschau-text { font-size: 80%; line-height: 120%; }
+	.res-boxes .postContent .box-post-category { font-size: 70%; line-height: 120%; }
+}
+
+/* BOX Custom Class */
+.box-custom-class .box-inner {
+  border: 10px solid;
+  border-image-slice: 1;
+  border-width: 5px;
+  border-image-source: linear-gradient(to left, #f4f4f4, #ccc);
+}
+
+
+/* Box Styles individuell  */
+
+.res-boxes .box-custom {
+	background: linear-gradient(60deg, #eee 30%, #f8f8f8);
+	border-radius: 0px 0px 30px 0px;
+/*	background: linear-gradient(to right, #f4f4f4 80%, #eee 80% 20%);*/
+}
+
+/* Box Content Text Padding individuell  */ 
+.res-boxes .boxlayout01 .box-content {
+	padding-top: 20px;
+	padding-left: 35px;
+	padding-right: 25px;
+	padding-bottom: 25px;
+}
+.res-boxes .boxlayout02 .box-content {
+	padding-bottom: 20px;
+	padding-left: 30px;
+	padding-right: 10px;
+}
+.res-boxes .boxlayout03 .teamContent.box-content {
+	padding-top: 15px;
+	padding-left: 35px;
+	padding-right: 20px;
+	padding-bottom: 10px;
+}
+
+.res-boxes .darkmode{
+	background-color: #000;
+	color: #fff;
+}
+.res-boxes .darkmode a,
+.res-boxes .darkmode a.btn{
+	color: #fff;
+}
+
+
+
+/* Effekt Boxes Slider   */
+
+.scale-box {
+	transition: all .4s ease-in-out;
+}
+.scale-box:hover {
+	transition: all .1s ease-in-out;
+	transform: scale(1.01);
+	opacity: .8;
+}
+.scale-boximg img {
+	transition: all .7s ease-in-out;
+}
+.scale-boximg:hover img {
+	transition: all .3s ease-in-out;
+	transform: scale(1.03);
+	opacity: .9;
+}
+
+.scale-team {
+	transition: all .4s ease-in-out;
+}
+.scale-team:hover {
+	transition: all .1s ease-in-out;
+	transform: scale(1.01);
+	opacity: .8;
+}
+
+.scale-teamimg img {
+	transition: all .7s ease-in-out;
+}
+.scale-teamimg:hover img {
+	transition: all .3s ease-in-out;
+	transform: scale(1.03);
+	opacity: .9;
+}
+
+
+
+
+
+/* ------------  Hover Effekte  ---------------- */
+
+/* Box-Links   */
+
+.res-boxes .box-link-modal {
+	transition: all 0.5s ease-in-out;
+}
+.res-boxes .box-url-link {
+	transition: all 0.5s ease-in-out;
+}
+
+
+/* Team-Links   */
+
+.res-boxes .team-link-modal {
+	transition: all 1s ease-in-out;
+}
+.res-boxes .team-url-link {
+	transition: all 1s ease-in-out;
+}
+
+.res-boxes .team-url-link:hover{
+	transition: all .2s ease-in-out;
+/*	transform: scale(0.95);*/
+	opacity: .8;
+}
+.res-boxes .team-link-modal:hover {
+	transition: all .2s ease-in-out;
+/*	transform: scale(0.95);*/
+	opacity: .8;
+}
+
+
+/* ------------  Modal Box ---------------- */
+
+
+.boxes-modal .modal-content .container {
+	max-width: 90%;
+}
+.boxes-modal .modal-content .res-header,
+.boxes-modal .modal-content .overlayer-burgermenu,
+.boxes-modal .modal-content #footer-fade,
+.boxes-modal .modal-content .cookies,
+.boxes-modal .modal-content .cta-sticker,
+.boxes-modal .modal-content .single-back-btn,
+.boxes-modal .modal-content #wpadminbar {
+    display: none !important;
+	opacity: 0.0!important;
+}
+.boxes-modal .modal-content .res-page-content.res-content-topspace{
+    padding: 0;
+}
+.boxes-modal .modal-header .close {
+    padding: 1rem 1rem 0 1rem;
+    margin: -1rem -1rem -1rem auto;
+}
+.boxes-modal .modal-body {
+    padding-top: 0;
+}
+.boxes-modal .modal-content .res-content {
+    padding-top: 0;
+}
+.boxes-modal .modal-content .cookie {
+    padding-top: 0;
+}
+@media only screen and (max-width: 970px) {
+	.boxes-modal .modal-content .container {
+		max-width: 100%;
+	}
+	.boxes-modal .modal-body {
+		padding: 0 6%;
+	}
+	.boxes-modal .modal-content .res-content {
+		margin-top: 0;
+	}
+}
+
+
+/* --------- Filter  --------------- */
+
+.res-boxes .res-filter-list {
+	margin: 0 auto;
+	width: 100%;
+	max-width: 1200px;
+}
+
+@media only screen and (max-width: 970px) {
+	.res-boxes ul.res-filter-list{
+		list-style: none;
+		padding: 5px 0 20px 0;
+	}
+	.res-boxes ul.res-filter-list li{
+		padding-bottom: 0;
+		margin-left: 20px;
+	}
+	.res-boxes ul.res-filter-list li:before {
+		content: "\f068";
+		font-family: "Font Awesome 5 Pro";
+		position:absolute;
+		margin-left:-17px;
+		text-decoration: inherit;
+		font-weight: normal;
+		font-size: 8px;
+		opacity: 0.2;
+	}
+
+	.res-boxes ul.res-filter-list {
+		display: flex;
+		flex-direction: column;
+	}
+}
+
+
+
+/* ------------  boxes Align Wide ab 1280px ---------------- */
+
+
+@media only screen and (min-width: 1280px) {
+	.res-boxes.alignwide .inner-container.container-wide, 
+	.res-boxes.alignwide .inner-container.container-off {
+		max-width: 100%;
+		margin: 0 auto;
+		width: 100%;
+		padding: 0 0 0 15px;
+	}
+}
+
+
+/* ------------  CMS Backend Preview ---------------- */
+    
+/*Bild Hover Effekt*/    
+.acf-block-preview .res-boxes .teamBox .teamImg.bild-effekt,
+.acf-block-preview .res-boxes .teamBox .teamImg.bild-effekt {pointer-events: none;}
+/*Bild Hover Effekt Ende*/
+
+.acf-block-preview .res-boxes {
+	position: relative;
+	padding: 10px 30px;
+	border-left: 1px solid #f4f4f4;
+}
+
+.acf-block-preview .res-boxes h1,
+.acf-block-preview .res-boxes h2,
+.acf-block-preview .res-boxes h3,
+.acf-block-preview .res-boxes h4 {
+	font-size: 18px;
+	line-height: 20px;
+	padding: 0;
+	margin: 0 0 10px 0;
+}
+.acf-block-preview .res-boxes p {
+	font-size: 16px !important;
+	padding: 0;
+	margin: 10px 0;
+}
+.acf-block-preview .res-boxes a {
+	color: #000;
+	text-decoration: none;
+}
+
+.acf-block-preview .res-boxes .postImg {
+	width: 100%;
+	max-width: 490px;
+	height: auto;
+}
+.acf-block-preview .res-boxes .postContent {
+	margin: 20px 0;
+}
+.acf-block-preview .res-boxes .postBox .vorschau-text {
+	font-size: 14px;
+	line-height: 16px;
+}
+
+.acf-block-preview .res-boxes .boxlayout02 .postBox {
+	position: relative;
+}
+.acf-block-preview .res-boxes .boxlayout02 .box-overlayer {
+	padding: 20px;
+}
+
+.acf-block-preview .res-boxes .teamContent {
+	padding: 0;
+}
+/* Hidden in Preview */
+.acf-block-preview .res-boxes .temp-modal-content,
+.acf-block-preview .res-boxes .team-infos,
+.acf-block-preview .res-boxes .res-boxes-filter {
+	display: none !important;
+}
+.acf-block-preview .res-boxes .grid {
+	max-height: 300px;
+	border-top: 1px solid #eee;
+	border-bottom: 1px solid #ccc;
+	overflow: hidden;
+}
+@media only screen and (min-width: 970px) {
+.acf-block-preview .res-boxes .row { display: flex; flex-wrap: wrap; margin-right: -15px; margin-left: -15px;}
+.acf-block-preview .res-boxes .row-cols-md-2 > * { flex: 0 0 50%; max-width: 50%;}
+.acf-block-preview .res-boxes .row-cols-md-4 > * { flex: 0 0 25%; max-width: 24%;}
+.acf-block-preview .res-boxes .row-cols-md-3 > * { flex: 0 0 33.1%; max-width: 33.1%;}
+}
+
+
+.acf-block-preview .res-boxes .postContent ul,
+.acf-block-preview .res-boxes .postContent li{
+	font-size: 16px !important;
+	line-height: 20px;
+	padding: 4px 0;
+	margin: 0 0 0 15px;
+}
+.acf-block-preview .res-boxes .postContent .btn {
+	font-size: 14px !important;
+	padding: 8px 16px;
+	margin: 8px 0;
+	border: 0;
+	background-color: #eee;
+}
+
+

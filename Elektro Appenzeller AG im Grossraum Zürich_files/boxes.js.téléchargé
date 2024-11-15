@@ -1,0 +1,53 @@
+(function ($, root, undefined) {
+	$(function () {
+		'use strict';
+		$(document).ready(function()
+		{
+			// Activate Filter if is in URL
+			var boxesFilterHash = window.location.hash;
+			$('.res-block .res-filter-list li').each(function () {
+				if(boxesFilterHash.replace('#', '') == $(this).attr('data-filter')) {
+					$(this).click();
+				}
+			});
+
+
+			// Wird das noch gebraucht? 27.06.2022
+			// $('.res-boxes .res-pagination a').click(function(e) {
+			//
+			// 	e.preventDefault();
+			//
+			// 	const url = new URL($(this).attr('href'))
+			// 	const searchParams = new URLSearchParams(url.search);
+			// 	const block_id = searchParams.get('block')
+			// 	const block = res_boxes.elements[block_id]
+			// 	const post_id = searchParams.get('post_id')
+			//
+			// 	res_get_boxes_posts(block, post_id)
+			//
+			// })
+			//
+			// function res_get_boxes_posts(block, post_id) {
+			// 	var data = {
+			// 		'action': 'show_boxes_block',
+			// 		'block': JSON.parse(block),
+			// 		'post_id': JSON.parse(post_id),
+			// 		// 'security': '...',
+			// 	};
+			//
+			// 	jQuery.ajax({
+			// 		type: "POST",
+			// 		url: res_boxes.ajaxurl,
+			// 		data: data,
+			// 		success: function (result) {
+			// 			$('section#res-boxes-'+data.block.id).replaceWith(result.data.page)
+			// 			AOS.refreshHard();
+			// 		},
+			// 		error: function (errorThrown) {
+			// 			console.error(errorThrown);
+			// 		}
+			// 	});
+			// }
+		});
+	});
+})(jQuery, this);

@@ -1,0 +1,83 @@
+
+/*************************************************************************/
+/* Sticker */
+
+
+.cta-sticker {
+    position: fixed;
+    bottom: 3%;
+    right: 2%;
+    z-index: 88;
+	transition: all .2s ease-in-out;
+	display: inline;
+} 
+.cta-sticker:hover {
+	transform: scale(0.95);
+	transition: all .2s ease-in-out;
+}
+.cta-circle {
+    border-radius: 50%;
+    width: 130px;
+    height: 130px;
+    background: #333;
+    color: #fff;
+    transition: all .2s ease-in-out;
+}
+.cta-sticker:hover {
+    transform: scale(0.95);
+    transition: all .2s ease-in-out;
+	opacity: .8;
+}
+
+.cta-circleTxt {
+    margin: 10px 0 0 0;
+}
+.cta-circleTxt i {
+    font-size: 180%;
+	margin-bottom: 8px;
+}
+.cta-circleTxt h4{
+	font-size: 90%;
+	font-weight: 300;
+	line-height: 120%;
+}
+.cta-circleTxt p{
+	font-size: 80%;
+	line-height: 105%;
+}
+
+@media only screen and (max-width: 970px) {
+	.cta-circle { width: 80px; height: 80px; }
+	.cta-sticker { right: 7%; }
+	.cta-circleTxt i {font-size: 110%;margin-bottom: 5px;}
+	.cta-circleTxt h4 {font-size: 75%;}
+	.cta-circleTxt p {font-size: 75%;}
+	
+}
+@media only screen and (min-width: 970px) {
+	#sticker-modal .modal-dialog {
+		max-width: 70%;
+	}
+}
+#sticker-modal .modal-content {
+	width: 100%;
+    pointer-events: auto;
+    background-color: transparent;
+	color: #fff;
+	border: 0;
+}
+#sticker-modal .x-close:before {
+    border-left: 3px solid #fff;
+}
+#sticker-modal .x-close:after {
+    border-left: 3px solid #fff;
+}
+#sticker-modal .modal-header .close {
+    padding: 1rem 2.4rem 0 0;
+}
+
+
+
+
+
+
